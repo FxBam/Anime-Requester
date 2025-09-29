@@ -20,11 +20,12 @@ function createCard(result){
     const card = document.createElement('div');
     card.classList.add('card');
     card.innerHTML = `
-        <img src="${result.image}" alt="${result.title}">
         <h2>${result.title}</h2>
+        <img src="${result.image}" alt="${result.title}">
+        <p><strong>Synopsis:</strong> ${result.synopsis}</p>
         <p><strong>Genre:</strong> ${result.genres.join(', ')}</p>
         <p><strong>Rating:</strong> ${result.rating}</p>
-        <p><strong>Synopsis:</strong> ${result.synopsis}</p>
+        <p><strong>Episodes:</strong> ${result.episodes}</p>
     `;
     document.body.appendChild(card);
 }
@@ -33,7 +34,6 @@ async function main(){
     const data = JSON.parse(result);
     for (let i = 0; i < data.data.length; i++) {
         createCard(data.data[i]);
-        console.log(data.data[i]);
     }
 }
 main();
