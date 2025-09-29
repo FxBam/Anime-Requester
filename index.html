@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Anime Requester</title>
+    </head>
+
+    <body>
+        <h1>Anime Requester</h1>
+        <form action="/submit" method="GET">
+            <label for="typeRecherche">Choisissez un type de recherche :</label>
+            <select id="typeRecherche" name="typeRecherche" required>
+                <option value="titre">Rechercher par titre</option>
+                <option value="genre">Rechercher par genre</option>
+                <option value="type">Rechercher par type</option>
+                <option value="notation">Rechercher par notation</option>
+            </select>
+            <br><br>
+            <label for="parametre">Paramètre :</label>
+            <textarea id="parametre" name="parametre" rows="4" cols="30" required></textarea>
+            <br><br>
+            <button type="submit">Rechercher</button>
+            <button type="clear" id="clearBtn">Effacer</button>
+        </form>
+
+        <script src="script.js"></script>
+    </body>
+</html>
