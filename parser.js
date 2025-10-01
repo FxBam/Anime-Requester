@@ -1,4 +1,4 @@
-const url = 'https://anime-db.p.rapidapi.com/anime?page=1&size=10&search=Fullmetal&genres=Fantasy%2CDrama&sortBy=ranking&sortOrder=asc';
+const url = 'https://anime-db.p.rapidapi.com/anime/by-id/1';
 const options = {
 	method: 'GET',
 	headers: {
@@ -21,7 +21,7 @@ function createCard(result){
     card.classList.add('card');
     card.innerHTML = `
         <h2>${result.title}</h2>
-        <img src="${result.image}" alt="${result.title}">
+        <img src="${result.image}" alt="image of ${result.title}">
         <p><strong>Synopsis:</strong> ${result.synopsis}</p>
         <p><strong>Genre:</strong> ${result.genres.join(', ')}</p>
         <p><strong>Rating:</strong> ${result.rating}</p>
@@ -37,8 +37,12 @@ function deleteCards(){
 async function main(){
     await fetchData();
     const json = JSON.parse(result);
+    try {
     for (let i = 0; i < json.data.length; i++) {
         createCard(json.data[i]);
+    }
+    } catch (error) {
+        createCard(json);
     }
     
 }
