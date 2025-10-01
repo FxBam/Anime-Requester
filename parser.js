@@ -27,13 +27,19 @@ function createCard(result){
         <p><strong>Rating:</strong> ${result.rating}</p>
         <p><strong>Episodes:</strong> ${result.episodes}</p>
     `;
-    document.body.appendChild(card);
+    document.getElementById("Cards").appendChild(card);
 }
+function deleteCards(){
+    let cards = document.getElementById("Cards");
+    Array.from(cards.getElementsByClassName("card")).forEach(card => card.remove());
+}
+
 async function main(){
     await fetchData();
-    const data = JSON.parse(result);
-    for (let i = 0; i < data.data.length; i++) {
-        createCard(data.data[i]);
+    const json = JSON.parse(result);
+    for (let i = 0; i < json.data.length; i++) {
+        createCard(json.data[i]);
     }
+    
 }
 main();
