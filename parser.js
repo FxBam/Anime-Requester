@@ -34,16 +34,17 @@ function deleteCards(){
     Array.from(cards.getElementsByClassName("card")).forEach(card => card.remove());
 }
 
-async function main(){
-    await fetchData();
-    const json = JSON.parse(result);
-    try {
-    for (let i = 0; i < json.data.length; i++) {
-        createCard(json.data[i]);
-    }
-    } catch (error) {
-        createCard(json);
-    }
+// Supprimez ces lignes à la fin du fichier
+// async function main(){
+//     await fetchData();
+//     const json = JSON.parse(result);
+//     try {
+//     for (let i = 0; i < json.data.length; i++) {
+//         createCard(json.data[i]);
+//     }
+//     } catch (error) {
+//         createCard(json);
+//     }
     
-}
-main();
+// }
+// main();
