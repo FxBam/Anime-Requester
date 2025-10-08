@@ -1,19 +1,24 @@
 function fetchAnimeData(typeRecherche, parametre) {
-    let apiUrl = 'https://anime-db.p.rapidapi.com/anime?page=1&size=10';
+    let apiUrl = 'https://anime-db.p.rapidapi.com/anime';
     
-    switch(typeRecherche) {
-        case 'titre':
-            apiUrl += `&search=${encodeURIComponent(parametre)}`;
-            break;
-        case 'genre':
-            apiUrl += `&genres=${encodeURIComponent(parametre)}`;
-            break;
-        case 'type':
-            apiUrl += `&type=${encodeURIComponent(parametre)}`;
-            break;
-        case 'notation':
-            apiUrl += `&sortBy=ranking&sortOrder=${parametre.toLowerCase()}`;
-            break;
+    if (typeRecherche === 'id') {
+        apiUrl += `/by-id/${encodeURIComponent(parametre)}`;
+    } else if (typeRecherche === 'notation') {
+                apiUrl += `/by-ranking/${parametre.toLowerCase()}`;
+    } else {
+        apiUrl += `${apiUrl}?page=1&size=10`;
+
+        switch(typeRecherche) {
+            case 'titre':
+                apiUrl += `&search=${encodeURIComponent(parametre)}`;
+                break;
+            case 'genre':
+                apiUrl += `&genres=${encodeURIComponent(parametre)}`;
+                    break;
+            case 'type':
+                apiUrl += `&type=${encodeURIComponent(parametre)}`;
+                break;
+        }
     }
 
     const options = {
@@ -42,10 +47,12 @@ document.getElementById('animeForm').addEventListener('submit', (event) => {
     const typeRecherche = formData.get('typeRecherche');
     const parametre = formData.get('parametre');
     
-    deleteCards(); // Nettoyer les cartes existantes
+    deleteCards();
     fetchAnimeData(typeRecherche, parametre)
         .then(data => {
-            if (data && data.data) {
+            if (typeRecherche === 'id' || typeRecherche === 'notation') {
+                createCard(data);
+            } else if (data && data.data) {
                 data.data.forEach(anime => {
                     createCard(anime);
                 });
@@ -60,4 +67,28 @@ document.getElementById('clearBtn').addEventListener('click', (event) => {
     event.preventDefault();
     document.getElementById('animeForm').reset();
     deleteCards();
+});
+
+document.getElementById('parametre').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+    const formData = new FormData(document.getElementById('animeForm'));
+    const typeRecherche = formData.get('typeRecherche');
+    const parametre = formData.get('parametre');
+    
+    deleteCards();
+    fetchAnimeData(typeRecherche, parametre)
+        .then(data => {
+            if (typeRecherche === 'id') {
+                createCard(data);
+            } else if (data && data.data) {
+                data.data.forEach(anime => {
+                    createCard(anime);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 });
