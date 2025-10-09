@@ -18,14 +18,14 @@ async function fetchData() {
 
 function createCard(result){
     const card = document.createElement('div');
-    card.classList.add('card');
+    card.classList.add('card', 'mb-4', 'shadow-sm');
     card.innerHTML = `
         <h2>${result.title}</h2>
-        <img src="${result.image}" alt="image of ${result.title}">
-        <p><strong>Synopsis:</strong> ${result.synopsis}</p>
-        <p><strong>Genre:</strong> ${result.genres.join(', ')}</p>
-        <p><strong>Rating:</strong> ${result.rating}</p>
-        <p><strong>Episodes:</strong> ${result.episodes}</p>
+        <img class="card-img-top img-centered-small" src="${result.image}" alt="image of ${result.title}">
+        <p class="card-title"><strong>Synopsis:</strong> ${result.synopsis}</p>
+        <p class="card-text"><strong>Genre:</strong> ${result.genres.join(', ')}</p>
+        <p class="card-text"><strong>Rating:</strong> ${result.rating}</p>
+        <p class="card-text"><strong>Episodes:</strong> ${result.episodes}</p>
     `;
     document.getElementById("Cards").appendChild(card);
 }

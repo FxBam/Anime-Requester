@@ -6,7 +6,7 @@ function fetchAnimeData(typeRecherche, parametre) {
     } else if (typeRecherche === 'notation') {
                 apiUrl += `/by-ranking/${parametre.toLowerCase()}`;
     } else {
-        apiUrl += `${apiUrl}?page=1&size=10`;
+        apiUrl += `?page=1&size=10`;
 
         switch(typeRecherche) {
             case 'titre':
