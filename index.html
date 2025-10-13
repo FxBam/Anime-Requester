@@ -9,26 +9,36 @@
     </head>
 
     <body>
-        <h1>Anime Requester</h1>
-        <form id="animeForm">
-            <label for="typeRecherche">Choisissez un type de recherche :</label>
-            <select id="typeRecherche" name="typeRecherche" required>
-                <option value="titre">Rechercher par titre</option>
-                <option value="genre">Rechercher par genre</option>
-                <option value="type">Rechercher par type</option>
-                <option value="notation">Rechercher par notation</option>
-                <option value="id">Rechercher par id</option>
-            </select>
-            <br><br>
-            <label for="parametre">Paramètre :</label>
-            <textarea id="parametre" name="parametre" rows="4" cols="30" required></textarea>
-            <br><br>
-            <button type="submit">Rechercher</button>
-            <button type="reset" id="clearBtn">Effacer</button>
-        </form>
+        <div class="container-fluid m-4 p-3 text-center">
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col">
+                    <h1>Anime Requester</h1>
+                    <form id="animeForm">
+                        <label for="typeRecherche">Choisissez un type de recherche :</label>
+                        <select class="form-select" id="typeRecherche" name="typeRecherche" required>
+                            <option value="titre">Rechercher par titre</option>
+                            <option value="genre">Rechercher par genre</option>
+                            <option value="type">Rechercher par type</option>
+                            <option value="notation">Rechercher par notation</option>
+                            <option value="id">Rechercher par id</option>
+                        </select>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="descripteur">En fonction de :</span>
+                            <input type="text" class="form-control" placeholder="écrire ici" aria-label="Input" aria-describedby="descripteur" id="inputValue" required>
+                        </div>
+                        <br><br>
+                        <button type="submit">Rechercher</button>
+                        <button type="reset" id="clearBtn">Effacer</button>
+                    </form>
 
-        <div id="Cards" class="container w-75"></div>
-
+                    <div id="Cards" class="container w-75"></div>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        </div>
         <script src="parser.js"></script>
         <script src="requete.js"></script>
     </body>

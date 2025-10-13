@@ -2,21 +2,21 @@ function fetchAnimeData(typeRecherche, parametre) {
     let apiUrl = 'https://anime-db.p.rapidapi.com/anime';
     
     if (typeRecherche === 'id') {
-        apiUrl += `/by-id/${encodeURIComponent(parametre)}`;
+        apiUrl += `/by-id/${document.getElementById('inputValue').value}`;
     } else if (typeRecherche === 'notation') {
-                apiUrl += `/by-ranking/${parametre.toLowerCase()}`;
+        apiUrl += `/by-ranking/${document.getElementById('inputValue').value.toLowerCase()}`;
     } else {
         apiUrl += `?page=1&size=10`;
 
         switch(typeRecherche) {
             case 'titre':
-                apiUrl += `&search=${encodeURIComponent(parametre)}`;
+                apiUrl += `&search=${document.getElementById('inputValue').value}`;
                 break;
             case 'genre':
-                apiUrl += `&genres=${encodeURIComponent(parametre)}`;
+                apiUrl += `&genres=${document.getElementById('inputValue').value}`;
                     break;
             case 'type':
-                apiUrl += `&type=${encodeURIComponent(parametre)}`;
+                apiUrl += `&type=${document.getElementById('inputValue').value}`;
                 break;
         }
     }
