@@ -1,24 +1,23 @@
-function fetchAnimeData(typeRecherche, parametre) {
-    let apiUrl = 'https://anime-db.p.rapidapi.com/anime';
-    
-    if (typeRecherche === 'id') {
-        apiUrl += `/by-id/${document.getElementById('inputValue').value}`;
-    } else if (typeRecherche === 'notation') {
-        apiUrl += `/by-ranking/${document.getElementById('inputValue').value.toLowerCase()}`;
-    } else {
-        apiUrl += `?page=1&size=10`;
-
-        switch(typeRecherche) {
-            case 'titre':
-                apiUrl += `&search=${document.getElementById('inputValue').value}`;
+function fetchAnimeData(typeRecherche) {
+    let BaseUrl = 'https://anime-db.p.rapidapi.com/anime';
+    switch(typeRecherche) {
+        case 'titre':
+            BaseUrl += `?page=1&size=10&search=${document.getElementById('inputValue').value}`;
+            break;
+        case 'genre':
+            BaseUrl += `?page=1&size=10&genres=${document.getElementById('inputValue').value}`;
                 break;
-            case 'genre':
-                apiUrl += `&genres=${document.getElementById('inputValue').value}`;
-                    break;
-            case 'type':
-                apiUrl += `&type=${document.getElementById('inputValue').value}`;
-                break;
-        }
+        case 'type':
+            BaseUrl += `?page=1&size=10&type=${document.getElementById('inputValue').value}`;
+            break;
+        case 'id':
+            BaseUrl += `/by-id/${document.getElementById('inputValue').value}`;
+            break;
+        case 'notation':
+            BaseUrl += `/by-ranking/${document.getElementById('inputValue').value.toLowerCase()}`;
+            break;
+        default:
+            throw new Error('Invalid search type');
     }
 
     const options = {
@@ -29,7 +28,7 @@ function fetchAnimeData(typeRecherche, parametre) {
         }
     };
 
-    return fetch(apiUrl, options)
+    return fetch(BaseUrl, options)
         .then(response => response.json())
         .then(data => {
             console.log('Anime data fetched successfully:', data);
@@ -41,14 +40,9 @@ function fetchAnimeData(typeRecherche, parametre) {
         });
 }
 
-document.getElementById('animeForm').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const typeRecherche = formData.get('typeRecherche');
-    const parametre = formData.get('parametre');
-    
+function rechercherAnime(typeRecherche) {
     deleteCards();
-    fetchAnimeData(typeRecherche, parametre)
+    fetchAnimeData(typeRecherche)
         .then(data => {
             if (typeRecherche === 'id' || typeRecherche === 'notation') {
                 createCard(data);
@@ -61,12 +55,12 @@ document.getElementById('animeForm').addEventListener('submit', (event) => {
         .catch(error => {
             console.error('Error:', error);
         });
-});
-
-document.getElementById('clearBtn').addEventListener('click', (event) => {
+}
+document.getElementById('animeForm').addEventListener('submit', (event) => {
     event.preventDefault();
-    document.getElementById('animeForm').reset();
-    deleteCards();
+    const formData = new FormData(event.target);
+    const typeRecherche = formData.get('typeRecherche');
+    rechercherAnime(typeRecherche);
 });
 
 document.getElementById('parametre').addEventListener('keydown', (event) => {
@@ -74,21 +68,13 @@ document.getElementById('parametre').addEventListener('keydown', (event) => {
         event.preventDefault();
     const formData = new FormData(document.getElementById('animeForm'));
     const typeRecherche = formData.get('typeRecherche');
-    const parametre = formData.get('parametre');
-    
-    deleteCards();
-    fetchAnimeData(typeRecherche, parametre)
-        .then(data => {
-            if (typeRecherche === 'id') {
-                createCard(data);
-            } else if (data && data.data) {
-                data.data.forEach(anime => {
-                    createCard(anime);
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    rechercherAnime(typeRecherche);
     }
 });
+
+document.getElementById('clearBtn').addEventListener('click', (event) => {
+    event.preventDefault();
+    document.getElementById('animeForm').reset();
+    deleteCards();
+});
+//TODO: add error handling for fetch and display a message to the user

@@ -6,8 +6,8 @@ function createCard(result){
         <img class="card-img-top img-centered-small" src="${result.image}" alt="image of ${result.title}">
         <p class="card-title"><strong>Synopsis:</strong> ${result.synopsis}</p>
         <p class="card-text"><strong>Genre:</strong> ${result.genres.join(', ')}</p>
-        <p class="card-text"><strong>Rating:</strong> ${result.rating}</p>
-        <p class="card-text"><strong>Episodes:</strong> ${result.episodes}</p>
+        <p class="card-text"><strong>Ranking:</strong> ${result.ranking}</p>
+        
     `;
     document.getElementById("Cards").appendChild(card);
 }
